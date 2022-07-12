@@ -9,13 +9,17 @@
 int _printf(const char *format, ...)
 {
 	int i, count;
+
 	int (*f)(va_list);
+
 	va_list list;
 
 	if (format == NULL)
 		return (-1);
+
 	va_start(list, format);
 	i = count = 0;
+
 	while (format[i] != '\0')
 	{
 		if (format[i] == '%')
