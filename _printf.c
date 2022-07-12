@@ -1,41 +1,47 @@
-#include <unistd.h>
 #include "main.h"
+
 /**
- *_printf - takes in a string and prints different types of arguments for
- * an unspecified amount of arguments
- * @format: the initial string that tell us what is going to be printed
- * Return: the amount of times we write to stdout
+ * _printf - is a function that prints data in printf format
+ * @format: identifier to look for.
+ * Return: the length of the string.
  */
+
 int _printf(const char *format, ...)
 {
-	int i, count;
-	int (*f)(va_list);
-	va_list list;
+	convert_match m[] = {
+		{"%s", printf_string},
+		{"%c", printf_char},
+		{"%%", printf_37},
+		{"%i", printf_int},
+		{"%d", printf_dec},
+		{"%b", printf_bin}
+	};
 
-	if (format == NULL)
+	va_list arg;
+	int i = 0, j, len = 0;
+
+	va_start(arg, format);
+	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
 		return (-1);
-	va_start(list, format);
-	i = count = 0;
+
+START:
 	while (format[i] != '\0')
 	{
-		if (format[i] == '%')
+		j = 5;
+		while (j >= 0)
 		{
-			if (format[i + 1] == '\0')
-				return (-1);
-			f = get_func(format[i + 1]);
-			if (f == NULL)
-				count += print_nan(format[i], format[i + 1]);
-			else
-				count += f(list);
-			i++;
+			if (m[j].id[0] == format[i] && m[j].id[1] == format[i + 1])
+			{
+				len += m[j].f(arg);
+				i = i + 2;
+				goto START;
+			}
+			j--;
 		}
-		else
-		{
-			_putchar(format[i]);
-			count++;
-		}
+		_putchar(format[i]);
+		len++;
 		i++;
 	}
-	va_end(list);
-	return (count);
+	va_end(arg);
+	return (len);
 }
