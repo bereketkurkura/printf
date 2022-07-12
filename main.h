@@ -3,6 +3,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <unistd.h>
+
 /**
  * struct buffer - buffer structure for our implimentation of printf
  * @buf: buffer to write characters
@@ -14,7 +15,9 @@
  * @fp: the current point in the format
  * @printed: the number of chars printed from _write
  */
+
 typedef struct buffer
+
 {
 	char *buf;
 	char *tmpbuf;
@@ -25,6 +28,7 @@ typedef struct buffer
 	int fp;
 	unsigned int printed;
 } buffer;
+
 /**
  *struct handlers - handlers struct
  *@plus:'+' flag
@@ -37,7 +41,9 @@ typedef struct buffer
  *@h_mod:h modifier handler
  *@l_mod:l modifier handler
  */
+
 typedef struct handlers
+
 {
 	unsigned int plus;
 	unsigned int space;
@@ -49,17 +55,21 @@ typedef struct handlers
 	unsigned int h_mod;
 	unsigned int l_mod;
 } han_s;
+
 /**
  * struct ops - a structure containing a char to compare with formatb modifiers
  * and then choose the right function when it matches
  * @operation: the char we want to compare to
  * @func: the address of the function we want to return if a char matches
  */
+
 typedef struct ops
+
 {
 	char operation;
 	int (*func)(va_list);
 } ops_f;
+
 int _printf(const char *format, ...);
 int _putchar(char c);
 int (*get_func(char ch))(va_list);
