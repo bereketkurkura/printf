@@ -10,7 +10,7 @@ int print_num(va_list list)
 	unsigned int n;
 	int count = 0;
 	int x = 1;
-	
+
 	if (num < 0)
 	{
 		n = -num;
